@@ -57,3 +57,15 @@ Route::get('/notification', 'NotificationController@notificationPage')->name('no
 Route::get('/send-notification', 'NotificationController@notificationForm')->name('notification.form');
 
 Route::post('/send-notification', 'NotificationController@notificationSend')->name('notification.send');
+
+
+
+// users
+
+Route::get('/users', 'UserController@index')->name('user.index');
+Route::get('/user-add', 'UserController@create')->name('user.create');
+Route::post('/user-add', 'UserController@store')->name('user.store');
+Route::get('/user-show/{id}', 'UserController@show')->name('user.show');
+Route::get('/user-edit/{id}', 'UserController@edit')->name('user.edit');
+Route::post('/user-destroy/{id}', 'UserController@destroy')->name('user.destroy');
+

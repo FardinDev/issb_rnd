@@ -4,50 +4,77 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 Use App\User;
-use Hash;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:view-users');
+        $this->middleware('permission:add-users', ['only' => ['create','store']]);
+        $this->middleware('permission:edit-users', ['only' => ['edit','update']]);
+        $this->middleware('permission:delete-users', ['only' => ['destroy']]);
 
-    public function __construct()
-{
-    ini_set('max_execution_time', 300);
-}
-   
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $users = User::all();
+
+        return view('users.index',compact('users'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+       $roles = Role::pluck('name','name')->all();
+
+       return view('users.create', compact('roles'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        // dd($request->all());
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|unique:users,phone',
+            'gender' => 'required',
+            'password' => 'required|min:6|same:confirm-password',
+            'role' => 'required',
+        ]);
 
 
-public function userThanas(){
-    $user = User::where('phone', '+8801711820509')->first();
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            "phone" =>  $request->phone,
+            "gender" =>  $request->gender == 0 ? 'male' : 'female',
+            "dob" =>  $request->dob,
+            "designation" =>  $request->designation,
+            "works_at" =>  $request->works_at,
+            'password' => Hash::make($request->password),
+        ]);
 
-dd($user->thanas[0]->name);
-}
+        $user->assignRole($request->role);
 
+        return redirect()->route('user.index')
+            ->with('success','User created successfully');
+    }
 
-
-
-public function importUser(){
-    // Get the contents of the JSON file 
-    $url = public_path() . '\files\police.json';
-$polices = file_get_contents($url);
-$polices = json_decode($polices, true);
-
-$polices = $polices['data'];
-
-foreach ($polices as $police) {
-    $data = [];
-    $data['name'] = array_key_exists('name', $police) ?  $police['name'] ? $police['name'] : '' : '';
-    $data['phone'] = $police['mobileNo'] ? $police['mobileNo'] : '';
-    $data['designation'] = $police['designation'] ? $police['designation'] : '';
-    $data['works_at'] = $police['workAt'] ? $police['workAt'] : '';
-    $data['level'] = $police['level']['numberInt'] ? $police['level']['numberInt'] : 0;
-    $data['is_enable'] = $police['isEnable'];
-    $data['is_police'] = $police['isPolice'];
-    $data['password'] = Hash::make('password');
-    $data['remember_token'] = str_random(10);
-    $data['active'] = 1;
-  
-    User::create($data);
-
-}
-
-}
 }

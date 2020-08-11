@@ -18,12 +18,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
     <script language="JavaScript" type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
     <script src="{{asset('js/select2.full.min.js')}}"></script>
-
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -271,6 +271,70 @@
                                     Home
                                 </a>
                             </li>
+
+                            <li class="app-sidebar__heading">User & Role Management</li>
+                            <li class="
+                            {{Route::is('user.create') ? 'mm-active' : ''}} 
+                            {{ Route::is('user.index') ? 'mm-active' : '' }} 
+                            {{ Route::is('user.edit') ? 'mm-active' : '' }}
+                            
+                            ">
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-user"></i>
+                                    {{config('staticTexts.user-m-title')}}
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                <ul>
+                                    @can('view-users')
+                                    <li>
+                                        <a href="{{route('user.index')}}" class="{{ Route::is('user.index') ? 'mm-active' : '' }}">
+                                            <i class="metismenu-icon"></i>
+                                           {{config('staticTexts.user-m-user-list')}}
+                                        </a>
+                                    </li>
+                                    @endcan
+                                    @can('add-users')
+                                    <li>
+                                        <a href="{{route('user.create')}}" class="{{ Route::is('user.create') ? 'mm-active' : '' }}">
+                                            <i class="metismenu-icon">
+                                            </i>
+                                            {{config('staticTexts.user-m-add-user')}}
+                                        </a>
+                                    </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                            {{-- @role('Admin')
+                            <li class="
+                            {{Route::is('users.create') ? 'mm-active' : ''}} 
+                            {{ Route::is('users.index') ? 'mm-active' : '' }} 
+                            {{ Route::is('users.edit') ? 'mm-active' : '' }}
+                            
+                            ">
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-ticket"></i>
+                                    {{config('staticTexts.role-m-title')}}
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#" class="#">
+                                            <i class="metismenu-icon"></i>
+                                           {{config('staticTexts.role-list')}}
+                                        </a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="#" class="#">
+                                            <i class="metismenu-icon">
+                                            </i>
+                                            {{config('staticTexts.role-add')}}
+                                        </a>
+                                    </li>
+                                 
+                                </ul>
+                            </li>
+                            @endrole --}}
 
                             <li class="app-sidebar__heading">Post Management</li>
                             <li>
