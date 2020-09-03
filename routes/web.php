@@ -69,3 +69,22 @@ Route::get('/user-show/{id}', 'UserController@show')->name('user.show');
 Route::get('/user-edit/{id}', 'UserController@edit')->name('user.edit');
 Route::post('/user-destroy/{id}', 'UserController@destroy')->name('user.destroy');
 
+
+//candidate 
+Route::get('/candidates', 'CandidateController@index')->name('candidate.index');
+Route::get('/candidate-add', 'CandidateController@create')->name('candidate.create');
+Route::post('/candidate-add', 'CandidateController@store')->name('candidate.store');
+Route::get('/candidate-show/{id}', 'CandidateController@show')->name('candidate.show');
+Route::get('/candidate-edit/{id}', 'CandidateController@edit')->name('candidate.edit');
+Route::post('/candidate-destroy/{id}', 'CandidateController@destroy')->name('candidate.destroy');
+Route::get('/candidates/ajax', 'CandidateController@ajax')->name('candidate.ajax');
+Route::post('/candidates/search', 'CandidateController@search')->name('candidate.search');
+
+// Route::get('/candidates/index', 'Admin\CandidateController@index')->name('post.index');
+
+// Route::get('/candidates/show/{id}', 'Admin\CandidateController@show')->name('post.show');
+
+
+
+
+Route::get('/candidate/add', 'CandidateController@add')->name('candidate.add');

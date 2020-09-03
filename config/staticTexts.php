@@ -3,7 +3,7 @@
 return [
     'app_name' => 'ISSB Candidates Data',
     
-    'welcome_title' => 'Welcome To ISSB Candidates Management',
+    'welcome_title' => 'Welcome To ISSB R&d',
     'welcome_subtitle' => 'Please sign in to your account.',
 
     'second_slider_title' => 'ISSB',

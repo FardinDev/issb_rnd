@@ -304,6 +304,38 @@
                                     @endcan
                                 </ul>
                             </li>
+                            <li class="app-sidebar__heading">Candidate Data Management</li>
+                            <li class="
+                            {{Route::is('candidate.create') ? 'mm-active' : ''}} 
+                            {{ Route::is('candidate.index') ? 'mm-active' : '' }} 
+                            {{ Route::is('candidate.edit') ? 'mm-active' : '' }}
+                            
+                            ">
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-users"></i>
+                                   Candidates
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                <ul>
+                                    
+                                    <li>
+                                        <a href="{{route('candidate.index')}}" class="{{ Route::is('candidate.index') ? 'mm-active' : '' }}">
+                                            <i class="metismenu-icon"></i>
+                                           View Added Candidates
+                                        </a>
+                                    </li>
+                                 
+                                   
+                                    <li>
+                                        <a href="{{route('candidate.create')}}" class="{{ Route::is('candidate.create') ? 'mm-active' : '' }}">
+                                            <i class="metismenu-icon">
+                                            </i>
+                                           Add Candidate
+                                        </a>
+                                    </li>
+                               
+                                </ul>
+                            </li>
                             {{-- @role('Admin')
                             <li class="
                             {{Route::is('users.create') ? 'mm-active' : ''}} 
@@ -336,14 +368,14 @@
                             </li>
                             @endrole --}}
 
-                            <li class="app-sidebar__heading">Post Management</li>
+                            {{-- <li class="app-sidebar__heading">Post Management</li>
                             <li>
                                 <a href="{{route('post.index')}}"
                                     class="{{ Route::is('post.index') ? 'mm-active' : '' }}">
                                     <i class="metismenu-icon pe-7s-news-paper"></i>
                                     Posts
                                 </a>
-                            </li>
+                            </li> --}}
 
                         </ul>
                     </div>
@@ -367,7 +399,7 @@
 
 
 
-    @if ( Route::is('post.index'))
+    @if ( Route::is('post.index') || Route::is('candidate.index'))
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
     @endif
